@@ -165,6 +165,7 @@ export default {
     authorization: 'Authorization',
     user: 'User management',
     role: 'Role management',
+    warehouse: 'Warehouse managment',
     document: 'Document',
     inputPassword: 'InputPassword',
     sticky: 'Sticky',
@@ -556,6 +557,14 @@ export default {
     role: 'Role',
     // 菜单分配
     menu: 'Menu allocation'
+  },
+  warehouse: {
+    goodsName: 'Goods name',
+    goodsNumber: 'Goods number',
+    goods: 'Goods',
+    menu: 'Menu allocation',
+    enable: 'in store',
+    disable: 'out of store'
   },
   inputPasswordDemo: {
     title: 'InputPassword',

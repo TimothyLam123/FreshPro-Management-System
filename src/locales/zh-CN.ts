@@ -163,6 +163,7 @@ export default {
     authorization: '权限管理',
     user: '用户管理',
     role: '角色管理',
+    warehouse: '仓库管理',
     document: '文档',
     inputPassword: '密码输入框',
     sticky: '黏性',
@@ -546,6 +547,14 @@ export default {
     roleName: '角色名称',
     role: '角色',
     menu: '菜单分配'
+  },
+  warehouse: {
+    goodsName: '商品名称',
+    goodsNumber: '商品数量',
+    goods: '商品',
+    menu: '菜单分配',
+    enable: '入库',
+    disable: '出库'
   },
   inputPasswordDemo: {
     title: '密码输入框',
