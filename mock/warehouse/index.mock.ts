@@ -1,7 +1,7 @@
 import Mock from 'mockjs'
 import { SUCCESS_CODE } from '@/constants'
 import { toAnyString } from '@/utils'
-import { status } from 'nprogress'
+// import { status } from 'nprogress'
 
 const timeout = 1000
 
@@ -191,21 +191,16 @@ const menus = [
 ]
 
 for (let i = 0; i < 4; i++) {
-  // const stat = Mock.Random.integer(0, 1),
-  // if (stat === 0) {
-  //   const goodsNo = 0;
-  // } else {
-  //   const goodsNo = Mock.Random.integer(1,99);
-  // }
   List.push(
     Mock.mock({
       id: toAnyString(),
       // timestamp: +Mock.Random.date('T'),
       goodsName: goodsNames[i],
       role: '@first',
-      status: Mock.Random.integer(0, 1),
-      goodsNumber: function () {
-        return status === 0 ? 0 : Mock.Random.integer(1, 99)
+      goodsNumber: Mock.Random.integer(0, 99),
+      status: function () {
+        console.log('goodsNumber in function', this.goodsNumber)
+        return this.goodsNumber === 0 ? 0 : 1
       },
       createTime: '@datetime',
       remark: '@cword(10, 15)',
