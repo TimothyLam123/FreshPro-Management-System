@@ -4,6 +4,9 @@ import { Descriptions, DescriptionsSchema } from '@/components/Descriptions'
 import { ElTag, ElTree } from 'element-plus'
 import { findIndex } from '@/utils'
 import { getMenuListApi } from '@/api/menu'
+import { useI18n } from '@/hooks/web/useI18n'
+
+const { t } = useI18n()
 
 defineProps({
   currentRow: {
@@ -20,7 +23,11 @@ const filterPermissionName = (value: string) => {
 }
 
 const renderTag = (enable?: boolean) => {
-  return <ElTag type={!enable ? 'danger' : 'success'}>{enable ? '启用' : '禁用'}</ElTag>
+  return (
+    <ElTag type={!enable ? 'danger' : 'success'}>
+      {enable ? t('warehouse.enable') : t('warehouse.disable')}
+    </ElTag>
+  )
 }
 
 const treeRef = ref<typeof ElTree>()
@@ -42,12 +49,12 @@ getMenuList()
 
 const detailSchema = ref<DescriptionsSchema[]>([
   {
-    field: 'roleName',
-    label: '角色名称'
+    field: 'goodsName',
+    label: t('warehouse.goodsName')
   },
   {
     field: 'status',
-    label: '状态',
+    label: t('warehouse.status'),
     slots: {
       default: (data: any) => {
         return renderTag(data.status)
@@ -56,12 +63,12 @@ const detailSchema = ref<DescriptionsSchema[]>([
   },
   {
     field: 'remark',
-    label: '备注',
+    label: t('userDemo.remark'),
     span: 24
   },
   {
     field: 'permissionList',
-    label: '菜单分配',
+    label: t('role.menu'),
     span: 24,
     slots: {
       default: () => {
