@@ -554,7 +554,8 @@ export default {
     goods: '商品',
     menu: '菜单分配',
     enable: '入库',
-    disable: '出库'
+    disable: '出库',
+    status: '状态'
   },
   inputPasswordDemo: {
     title: '密码输入框',

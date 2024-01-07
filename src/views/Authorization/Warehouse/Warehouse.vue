@@ -129,12 +129,21 @@ const AddAction = () => {
 const save = async () => {
   const write = unref(writeRef)
   const formData = await write?.submit()
+  console.log('tableColumns1', tableColumns)
+  console.log('currentRow.value', currentRow.value)
   if (formData) {
     saveLoading.value = true
     setTimeout(() => {
       saveLoading.value = false
       dialogVisible.value = false
     }, 1000)
+    currentRow.value.goodsName = formData.goodsName
+    currentRow.value.goodsNumber = formData.goodsNumber
+    if (currentRow.value.goodsNumber == 0) {
+      currentRow.value.status = 0
+    } else {
+      currentRow.value.status = 1
+    }
   }
 }
 </script>

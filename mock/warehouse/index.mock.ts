@@ -197,9 +197,8 @@ for (let i = 0; i < 4; i++) {
       // timestamp: +Mock.Random.date('T'),
       goodsName: goodsNames[i],
       role: '@first',
-      goodsNumber: Mock.Random.integer(0, 99),
+      goodsNumber: Mock.Random.integer(0, 9),
       status: function () {
-        console.log('goodsNumber in function', this.goodsNumber)
         return this.goodsNumber === 0 ? 0 : 1
       },
       createTime: '@datetime',

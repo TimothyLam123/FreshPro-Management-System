@@ -24,26 +24,31 @@ const treeRef = ref<typeof ElTree>()
 
 const formSchema = ref<FormSchema[]>([
   {
-    field: 'roleName',
-    label: t('role.roleName'),
+    field: 'goodsName',
+    label: t('warehouse.goodsName'),
     component: 'Input'
   },
+  // {
+  //   field: 'status',
+  //   label: t('warehouse.status'),
+  //   component: 'Select',
+  //   componentProps: {
+  //     options: [
+  //       {
+  //         label: t('warehouse.disable'),
+  //         value: 0
+  //       },
+  //       {
+  //         label: t('warehouse.enable'),
+  //         value: 1
+  //       }
+  //     ]
+  //   }
+  // },
   {
-    field: 'status',
-    label: t('menu.status'),
-    component: 'Select',
-    componentProps: {
-      options: [
-        {
-          label: t('userDemo.disable'),
-          value: 0
-        },
-        {
-          label: t('userDemo.enable'),
-          value: 1
-        }
-      ]
-    }
+    field: 'goodsNumber',
+    label: t('warehouse.goodsNumber'),
+    component: 'Input'
   },
   {
     field: 'menu',
@@ -99,9 +104,10 @@ const nodeClick = (treeData: any) => {
 }
 
 const rules = reactive({
-  roleName: [required()],
-  role: [required()],
-  status: [required()]
+  goodsName: [required()],
+  goods: [required()],
+  // status: [required()],
+  goodsNumber: [required()]
 })
 
 const { formRegister, formMethods } = useForm()
@@ -154,7 +160,7 @@ const submit = async () => {
       return checkedKeys.includes(item.id)
     })
     formData.menu = data || []
-    console.log(formData)
+    console.log('formData2', formData)
     return formData
   }
 }

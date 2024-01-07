@@ -564,7 +564,8 @@ export default {
     goods: 'Goods',
     menu: 'Menu allocation',
     enable: 'in store',
-    disable: 'out of store'
+    disable: 'out of store',
+    status: 'status'
   },
   inputPasswordDemo: {
     title: 'InputPassword',
