@@ -80,7 +80,9 @@ const tableColumns = reactive<TableColumn[]>([
             <BaseButton type="success" onClick={() => action(row, 'detail')}>
               {t('exampleDemo.detail')}
             </BaseButton>
-            <BaseButton type="danger">{t('exampleDemo.del')}</BaseButton>
+            <BaseButton type="danger" onClick={() => handleDelete(row)}>
+              {t('exampleDemo.del')}
+            </BaseButton>
           </>
         )
       }
@@ -119,6 +121,18 @@ const action = (row: any, type: string) => {
   dialogVisible.value = true
 }
 
+const handleDelete = (row) => {
+  console.log('row to Delete', row)
+  // tableColumns.splice(row, 1)
+  row.goodsName = null
+  // row.goodsNumber = null
+  const indexToDelete = tableColumns.findIndex((column) => column.field === row.goodsName)
+  console.log('indexToDelete', indexToDelete)
+  // row.value = null
+  console.log('row to Delete2', row)
+  console.log('tableColumns', tableColumns)
+}
+
 const AddAction = () => {
   dialogTitle.value = t('exampleDemo.add')
   currentRow.value = undefined
@@ -129,8 +143,6 @@ const AddAction = () => {
 const save = async () => {
   const write = unref(writeRef)
   const formData = await write?.submit()
-  console.log('tableColumns1', tableColumns)
-  console.log('currentRow.value', currentRow.value)
   if (formData) {
     saveLoading.value = true
     setTimeout(() => {
