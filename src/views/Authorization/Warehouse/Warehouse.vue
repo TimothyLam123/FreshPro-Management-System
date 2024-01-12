@@ -123,14 +123,15 @@ const action = (row: any, type: string) => {
 
 const handleDelete = (row) => {
   console.log('row to Delete', row)
-  // tableColumns.splice(row, 1)
-  row.goodsName = null
-  // row.goodsNumber = null
-  const indexToDelete = tableColumns.findIndex((column) => column.field === row.goodsName)
-  console.log('indexToDelete', indexToDelete)
-  // row.value = null
-  console.log('row to Delete2', row)
-  console.log('tableColumns', tableColumns)
+  tableColumns.splice(row, 1)
+  // row.goodsName = null
+  // // row.goodsNumber = null
+  // const indexToDelete = tableColumns.findIndex((column) => column.field === row.goodsName)
+  // console.log('indexToDelete', indexToDelete)
+  // tableColumns.splice(indexToDelete, 1)
+  // // row.value = null
+  // console.log('row to Delete2', row)
+  // console.log('tableColumns', tableColumns)
 }
 
 const AddAction = () => {
