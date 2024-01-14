@@ -12,10 +12,12 @@ import Write from './components/Write.vue'
 import Detail from './components/Detail.vue'
 import { Dialog } from '@/components/Dialog'
 import { BaseButton } from '@/components/Button'
+import { template } from 'lodash-es'
 
 const { t } = useI18n()
 
-const { tableRegister, tableState, tableMethods } = useTable({
+// const { tableRegister, tableState, tableMethods } = useTable({
+const { tableRegister, tableState } = useTable({
   fetchDataApi: async () => {
     const res = await getWarehouseListApi()
     return {
@@ -26,7 +28,7 @@ const { tableRegister, tableState, tableMethods } = useTable({
 })
 
 const { dataList, loading, total } = tableState
-const { getList } = tableMethods
+// const { getList } = tableMethods
 
 const tableColumns = reactive<TableColumn[]>([
   {
@@ -72,6 +74,7 @@ const tableColumns = reactive<TableColumn[]>([
     slots: {
       default: (data: any) => {
         const row = data.row
+        const index = data.$index
         return (
           <>
             <BaseButton type="primary" onClick={() => action(row, 'edit')}>
@@ -80,7 +83,7 @@ const tableColumns = reactive<TableColumn[]>([
             <BaseButton type="success" onClick={() => action(row, 'detail')}>
               {t('exampleDemo.detail')}
             </BaseButton>
-            <BaseButton type="danger" onClick={() => handleDelete(row)}>
+            <BaseButton type="danger" onClick={() => handleDelete(index)}>
               {t('exampleDemo.del')}
             </BaseButton>
           </>
@@ -98,10 +101,29 @@ const searchSchema = reactive<FormSchema[]>([
   }
 ])
 
+// const handler = {}
 const searchParams = ref({})
 const setSearchParams = (data: any) => {
+  console.log('data from search params', data.goodsName)
   searchParams.value = data
-  getList()
+  // console.log('searchParams', searchParams.value.goodsName)
+  const tempList = dataList.value.filter((item) => {
+    console.log('item', item.goodsName)
+    return item.goodsName.indexOf(data.goodsName) !== -1
+  })
+  console.log('tempList', tempList)
+  console.log('dataList', dataList.value)
+  // getList()
+  if (tempList.length > 0) {
+    // dataList.value = tempList
+    dataList.value = []
+    dataList.value.push(tempList)
+    // dataList.value = new Proxy([tempList], handler)
+    console.log('dataList123', dataList.value)
+  } else {
+    dataList.value = []
+  }
+  console.log('dataList', dataList)
 }
 
 const dialogVisible = ref(false)
@@ -121,17 +143,8 @@ const action = (row: any, type: string) => {
   dialogVisible.value = true
 }
 
-const handleDelete = (row) => {
-  console.log('row to Delete', row)
-  tableColumns.splice(row, 1)
-  // row.goodsName = null
-  // // row.goodsNumber = null
-  // const indexToDelete = tableColumns.findIndex((column) => column.field === row.goodsName)
-  // console.log('indexToDelete', indexToDelete)
-  // tableColumns.splice(indexToDelete, 1)
-  // // row.value = null
-  // console.log('row to Delete2', row)
-  // console.log('tableColumns', tableColumns)
+const handleDelete = (index: any) => {
+  dataList.value.splice(index, 1)
 }
 
 const AddAction = () => {
