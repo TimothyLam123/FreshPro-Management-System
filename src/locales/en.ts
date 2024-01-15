@@ -166,6 +166,7 @@ export default {
     user: 'User management',
     role: 'Role management',
     warehouse: 'Warehouse managment',
+    supplier: 'Supplier managment',
     document: 'Document',
     inputPassword: 'InputPassword',
     sticky: 'Sticky',
