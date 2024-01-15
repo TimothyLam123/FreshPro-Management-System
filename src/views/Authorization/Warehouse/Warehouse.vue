@@ -16,8 +16,7 @@ import { template } from 'lodash-es'
 
 const { t } = useI18n()
 
-// const { tableRegister, tableState, tableMethods } = useTable({
-const { tableRegister, tableState } = useTable({
+const { tableRegister, tableState, tableMethods } = useTable({
   fetchDataApi: async () => {
     const res = await getWarehouseListApi()
     return {
@@ -28,7 +27,7 @@ const { tableRegister, tableState } = useTable({
 })
 
 const { dataList, loading, total } = tableState
-// const { getList } = tableMethods
+const { getList } = tableMethods
 
 const tableColumns = reactive<TableColumn[]>([
   {
@@ -101,29 +100,22 @@ const searchSchema = reactive<FormSchema[]>([
   }
 ])
 
-// const handler = {}
 const searchParams = ref({})
 const setSearchParams = (data: any) => {
-  console.log('data from search params', data.goodsName)
   searchParams.value = data
-  // console.log('searchParams', searchParams.value.goodsName)
   const tempList = dataList.value.filter((item) => {
-    console.log('item', item.goodsName)
     return item.goodsName.indexOf(data.goodsName) !== -1
   })
-  console.log('tempList', tempList)
-  console.log('dataList', dataList.value)
-  // getList()
   if (tempList.length > 0) {
-    // dataList.value = tempList
     dataList.value = []
-    dataList.value.push(tempList)
-    // dataList.value = new Proxy([tempList], handler)
-    console.log('dataList123', dataList.value)
+    dataList.value.push(...tempList)
   } else {
     dataList.value = []
   }
-  console.log('dataList', dataList)
+}
+
+const reset = () => {
+  getList()
 }
 
 const dialogVisible = ref(false)
@@ -147,11 +139,11 @@ const handleDelete = (index: any) => {
   dataList.value.splice(index, 1)
 }
 
-const AddAction = () => {
+const AddAction = async () => {
   dialogTitle.value = t('exampleDemo.add')
-  currentRow.value = undefined
+  currentRow.value = {}
   dialogVisible.value = true
-  actionType.value = ''
+  actionType.value = 'add'
 }
 
 const save = async () => {
@@ -171,12 +163,15 @@ const save = async () => {
       currentRow.value.status = 1
     }
   }
+  if (actionType.value == 'add') {
+    dataList.value.push(currentRow.value)
+  }
 }
 </script>
 
 <template>
   <ContentWrap>
-    <Search :schema="searchSchema" @reset="setSearchParams" @search="setSearchParams" />
+    <Search :schema="searchSchema" @reset="reset" @search="setSearchParams" />
     <div class="mb-10px">
       <BaseButton type="primary" @click="AddAction">{{ t('exampleDemo.add') }}</BaseButton>
     </div>
