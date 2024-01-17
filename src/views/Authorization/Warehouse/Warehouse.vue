@@ -13,6 +13,7 @@ import Detail from './components/Detail.vue'
 import { Dialog } from '@/components/Dialog'
 import { BaseButton } from '@/components/Button'
 import { template } from 'lodash-es'
+import Mock from 'mockjs'
 
 const { t } = useI18n()
 
@@ -164,6 +165,8 @@ const save = async () => {
     }
   }
   if (actionType.value == 'add') {
+    currentRow.value.remark = Mock.mock('@cword(10,15)')
+    currentRow.value.createTime = Mock.Random.now()
     dataList.value.push(currentRow.value)
   }
 }

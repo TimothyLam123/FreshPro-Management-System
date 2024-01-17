@@ -558,6 +558,12 @@ export default {
     disable: '出库',
     status: '状态'
   },
+  supplier: {
+    supplierName: '供应商名称',
+    supplierAddr: '供应商地址',
+    contactName: '联系人姓名',
+    contactNumber: '联系人号码'
+  },
   inputPasswordDemo: {
     title: '密码输入框',
     inputPasswordDes: '基于 ElementPlus 的 Input 组件二次封装'

@@ -4,7 +4,7 @@ import { getSupplierListApi } from '@/api/supplier'
 import { useTable } from '@/hooks/web/useTable'
 import { useI18n } from '@/hooks/web/useI18n'
 import { Table, TableColumn } from '@/components/Table'
-import { ElTag } from 'element-plus'
+// import { ElTag } from 'element-plus'
 import { Search } from '@/components/Search'
 import { FormSchema } from '@/components/Form'
 import { ContentWrap } from '@/components/ContentWrap'
@@ -13,6 +13,7 @@ import Detail from './components/Detail.vue'
 import { Dialog } from '@/components/Dialog'
 import { BaseButton } from '@/components/Button'
 import { template } from 'lodash-es'
+import Mock from 'mockjs'
 
 const { t } = useI18n()
 
@@ -36,31 +37,16 @@ const tableColumns = reactive<TableColumn[]>([
     type: 'index'
   },
   {
-    field: 'goodsName',
-    label: t('warehouse.goodsName')
+    field: 'supplierName',
+    label: t('supplier.supplierName')
   },
   {
-    field: 'goodsNumber',
-    label: t('warehouse.goodsNumber')
+    field: 'supplierAddr',
+    label: t('supplier.supplierAddr')
   },
   {
-    field: 'status',
-    label: t('menu.status'),
-    slots: {
-      default: (data: any) => {
-        return (
-          <>
-            <ElTag type={data.row.status === 0 ? 'danger' : 'success'}>
-              {data.row.status === 1 ? t('warehouse.enable') : t('warehouse.disable')}
-            </ElTag>
-          </>
-        )
-      }
-    }
-  },
-  {
-    field: 'createTime',
-    label: t('tableDemo.displayTime')
+    field: 'contactName',
+    label: t('supplier.contactName')
   },
   {
     field: 'remark',
@@ -94,8 +80,8 @@ const tableColumns = reactive<TableColumn[]>([
 
 const searchSchema = reactive<FormSchema[]>([
   {
-    field: 'goodsName',
-    label: t('warehouse.goodsName'),
+    field: 'supplierName',
+    label: t('supplier.supplierName'),
     component: 'Input'
   }
 ])
@@ -104,7 +90,7 @@ const searchParams = ref({})
 const setSearchParams = (data: any) => {
   searchParams.value = data
   const tempList = dataList.value.filter((item) => {
-    return item.goodsName.indexOf(data.goodsName) !== -1
+    return item.supplierName.indexOf(data.supplierName) !== -1
   })
   if (tempList.length > 0) {
     dataList.value = []
@@ -155,15 +141,13 @@ const save = async () => {
       saveLoading.value = false
       dialogVisible.value = false
     }, 1000)
-    currentRow.value.goodsName = formData.goodsName
-    currentRow.value.goodsNumber = formData.goodsNumber
-    if (currentRow.value.goodsNumber == 0) {
-      currentRow.value.status = 0
-    } else {
-      currentRow.value.status = 1
-    }
+    currentRow.value.supplierName = formData.supplierName
+    currentRow.value.supplierAddr = formData.supplierAddr
+    currentRow.value.contactName = formData.contactName
+    currentRow.value.contactNumber = formData.contactNumber
   }
   if (actionType.value == 'add') {
+    currentRow.value.remark = Mock.mock('@cword(10,15)')
     dataList.value.push(currentRow.value)
   }
 }

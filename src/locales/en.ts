@@ -568,6 +568,12 @@ export default {
     disable: 'out of store',
     status: 'status'
   },
+  supplier: {
+    supplierName: 'Supplier name',
+    supplierAddr: 'Supplier address',
+    contactName: 'Contact Name',
+    contactNumber: 'Contact Number'
+  },
   inputPasswordDemo: {
     title: 'InputPassword',
     inputPasswordDes: 'Secondary packaging of Input components based on ElementPlus'

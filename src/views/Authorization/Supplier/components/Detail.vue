@@ -22,14 +22,6 @@ const filterPermissionName = (value: string) => {
   return (unref(currentTreeData)?.permissionList || [])[index].label ?? ''
 }
 
-const renderTag = (enable?: boolean) => {
-  return (
-    <ElTag type={!enable ? 'danger' : 'success'}>
-      {enable ? t('warehouse.enable') : t('warehouse.disable')}
-    </ElTag>
-  )
-}
-
 const treeRef = ref<typeof ElTree>()
 
 const currentTreeData = ref()
@@ -49,17 +41,20 @@ getMenuList()
 
 const detailSchema = ref<DescriptionsSchema[]>([
   {
-    field: 'goodsName',
-    label: t('warehouse.goodsName')
+    field: 'supplierName',
+    label: t('supplier.supplierName')
   },
   {
-    field: 'status',
-    label: t('warehouse.status'),
-    slots: {
-      default: (data: any) => {
-        return renderTag(data.status)
-      }
-    }
+    field: 'supplierAddr',
+    label: t('supplier.supplierAddr')
+  },
+  {
+    field: 'contactName',
+    label: t('supplier.contactName')
+  },
+  {
+    field: 'contactNumber',
+    label: t('supplier.contactNumber')
   },
   {
     field: 'remark',

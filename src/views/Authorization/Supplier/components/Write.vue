@@ -24,30 +24,23 @@ const treeRef = ref<typeof ElTree>()
 
 const formSchema = ref<FormSchema[]>([
   {
-    field: 'goodsName',
-    label: t('warehouse.goodsName'),
+    field: 'supplierName',
+    label: t('supplier.supplierName'),
     component: 'Input'
   },
-  // {
-  //   field: 'status',
-  //   label: t('warehouse.status'),
-  //   component: 'Select',
-  //   componentProps: {
-  //     options: [
-  //       {
-  //         label: t('warehouse.disable'),
-  //         value: 0
-  //       },
-  //       {
-  //         label: t('warehouse.enable'),
-  //         value: 1
-  //       }
-  //     ]
-  //   }
-  // },
   {
-    field: 'goodsNumber',
-    label: t('warehouse.goodsNumber'),
+    field: 'supplierAddr',
+    label: t('supplier.supplierAddr'),
+    component: 'Input'
+  },
+  {
+    field: 'contactName',
+    label: t('supplier.contactName'),
+    component: 'Input'
+  },
+  {
+    field: 'contactNumber',
+    label: t('supplier.contactNumber'),
     component: 'Input'
   },
   {
@@ -104,10 +97,10 @@ const nodeClick = (treeData: any) => {
 }
 
 const rules = reactive({
-  goodsName: [required()],
-  goods: [required()],
-  // status: [required()],
-  goodsNumber: [required()]
+  supplierName: [required()],
+  supplierAddr: [required()],
+  contactName: [required()],
+  contactNumber: [required()]
 })
 
 const { formRegister, formMethods } = useForm()

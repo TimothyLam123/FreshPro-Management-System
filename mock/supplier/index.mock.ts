@@ -117,7 +117,11 @@ const testList: string[] = [
 
 const List: any[] = []
 
-const goodsNames = ['商品111', '商品222', '商品333', '商品444']
+const supplierNames = ['供应商111', '供应商222', '供应商333', '供应商444']
+const supplierAddrs = ['地址111', '地址222', '地址333', '地址444']
+const contactNames = ['联系人1', '联系人2', '联系人3', '联系人4']
+const contactNumbers = ['11111', '22222', '33333', '44444']
+
 const menus = [
   [
     {
@@ -204,13 +208,11 @@ for (let i = 0; i < 4; i++) {
     Mock.mock({
       id: toAnyString(),
       // timestamp: +Mock.Random.date('T'),
-      goodsName: goodsNames[i],
+      supplierName: supplierNames[i],
       role: '@first',
-      goodsNumber: Mock.Random.integer(0, 9),
-      status: function () {
-        return this.goodsNumber === 0 ? 0 : 1
-      },
-      createTime: '@datetime',
+      supplierAddr: supplierAddrs[i],
+      contactName: contactNames[i],
+      contactNumber: contactNumbers[i],
       remark: '@cword(10, 15)',
       menu: menus[i]
     })
