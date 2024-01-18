@@ -133,19 +133,27 @@ export const asyncRouterMap: AppRouteRecordRaw[] = [
         }
       },
       {
-        path: 'warehouse',
-        component: () => import('@/views/Authorization/Warehouse/Warehouse.vue'),
-        name: 'Warehouse',
-        meta: {
-          title: t('router.warehouse')
-        }
-      },
-      {
         path: 'supplier',
         component: () => import('@/views/Authorization/Supplier/Supplier.vue'),
         name: 'Supplier',
         meta: {
           title: t('router.supplier')
+        }
+      },
+      {
+        path: 'acceptance',
+        component: () => import('@/views/Authorization/Acceptance/Acceptance.vue'),
+        name: 'Acceptance',
+        meta: {
+          title: t('router.acceptance')
+        }
+      },
+      {
+        path: 'warehouse',
+        component: () => import('@/views/Authorization/Warehouse/Warehouse.vue'),
+        name: 'Warehouse',
+        meta: {
+          title: t('router.warehouse')
         }
       }
     ]

@@ -163,8 +163,9 @@ export default {
     authorization: '权限管理',
     user: '用户管理',
     role: '角色管理',
-    warehouse: '仓库管理',
     supplier: '供应商管理',
+    acceptance: '商品验收',
+    warehouse: '仓库管理',
     document: '文档',
     inputPassword: '密码输入框',
     sticky: '黏性',
@@ -549,6 +550,20 @@ export default {
     role: '角色',
     menu: '菜单分配'
   },
+  supplier: {
+    supplierName: '供应商名称',
+    supplierAddr: '供应商地址',
+    contactName: '联系人姓名',
+    contactNumber: '联系人号码'
+  },
+  acceptance: {
+    goodsName: '商品名称',
+    goodsQuality: '商品质量',
+    goodsQuantity: '商品数量',
+    enable: '合格',
+    disable: '不合格',
+    status: '状态'
+  },
   warehouse: {
     goodsName: '商品名称',
     goodsNumber: '商品数量',
@@ -557,12 +572,6 @@ export default {
     enable: '入库',
     disable: '出库',
     status: '状态'
-  },
-  supplier: {
-    supplierName: '供应商名称',
-    supplierAddr: '供应商地址',
-    contactName: '联系人姓名',
-    contactNumber: '联系人号码'
   },
   inputPasswordDemo: {
     title: '密码输入框',

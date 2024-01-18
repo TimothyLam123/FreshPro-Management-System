@@ -1,6 +1,6 @@
 <script setup lang="tsx">
 import { reactive, ref, unref } from 'vue'
-import { getWarehouseListApi } from '@/api/warehouse'
+import { getAcceptanceListApi } from '@/api/acceptance'
 import { useTable } from '@/hooks/web/useTable'
 import { useI18n } from '@/hooks/web/useI18n'
 import { Table, TableColumn } from '@/components/Table'
@@ -19,7 +19,7 @@ const { t } = useI18n()
 
 const { tableRegister, tableState, tableMethods } = useTable({
   fetchDataApi: async () => {
-    const res = await getWarehouseListApi()
+    const res = await getAcceptanceListApi()
     return {
       list: res.data.list || [],
       total: res.data.total
@@ -38,21 +38,47 @@ const tableColumns = reactive<TableColumn[]>([
   },
   {
     field: 'goodsName',
-    label: t('warehouse.goodsName')
+    label: t('acceptance.goodsName')
   },
   {
-    field: 'goodsNumber',
-    label: t('warehouse.goodsNumber')
+    field: 'goodsQuality',
+    label: t('acceptance.goodsQuality'),
+    slots: {
+      default: (data: any) => {
+        return (
+          <>
+            <ElTag type={data.row.goodsQuality === 0 ? 'danger' : 'success'}>
+              {data.row.goodsQuality === 1 ? t('acceptance.enable') : t('acceptance.disable')}
+            </ElTag>
+          </>
+        )
+      }
+    }
+  },
+  {
+    field: 'goodsQuantity',
+    label: t('acceptance.goodsQuantity'),
+    slots: {
+      default: (data: any) => {
+        return (
+          <>
+            <ElTag type={data.row.goodsQuantity === 0 ? 'danger' : 'success'}>
+              {data.row.goodsQuantity === 1 ? t('acceptance.enable') : t('acceptance.disable')}
+            </ElTag>
+          </>
+        )
+      }
+    }
   },
   {
     field: 'status',
-    label: t('warehouse.status'),
+    label: t('acceptance.status'),
     slots: {
       default: (data: any) => {
         return (
           <>
             <ElTag type={data.row.status === 0 ? 'danger' : 'success'}>
-              {data.row.status === 1 ? t('warehouse.enable') : t('warehouse.disable')}
+              {data.row.status === 1 ? t('acceptance.enable') : t('acceptance.disable')}
             </ElTag>
           </>
         )
@@ -96,7 +122,7 @@ const tableColumns = reactive<TableColumn[]>([
 const searchSchema = reactive<FormSchema[]>([
   {
     field: 'goodsName',
-    label: t('warehouse.goodsName'),
+    label: t('acceptance.goodsName'),
     component: 'Input'
   }
 ])
@@ -157,11 +183,12 @@ const save = async () => {
       dialogVisible.value = false
     }, 1000)
     currentRow.value.goodsName = formData.goodsName
-    currentRow.value.goodsNumber = formData.goodsNumber
-    if (currentRow.value.goodsNumber == 0) {
-      currentRow.value.status = 0
-    } else {
+    currentRow.value.goodsQuality = formData.goodsQuality
+    currentRow.value.goodsQuantity = formData.goodsQuantity
+    if (currentRow.value.goodsQuality == 1 && currentRow.value.goodsQuantity == 1) {
       currentRow.value.status = 1
+    } else {
+      currentRow.value.status = 0
     }
   }
   if (actionType.value == 'add') {

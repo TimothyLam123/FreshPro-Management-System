@@ -165,8 +165,9 @@ export default {
     authorization: 'Authorization',
     user: 'User management',
     role: 'Role management',
-    warehouse: 'Warehouse managment',
     supplier: 'Supplier managment',
+    acceptance: 'Goods acceptance',
+    warehouse: 'Warehouse managment',
     document: 'Document',
     inputPassword: 'InputPassword',
     sticky: 'Sticky',
@@ -559,6 +560,20 @@ export default {
     // 菜单分配
     menu: 'Menu allocation'
   },
+  supplier: {
+    supplierName: 'Supplier name',
+    supplierAddr: 'Supplier address',
+    contactName: 'Contact Name',
+    contactNumber: 'Contact Number'
+  },
+  acceptance: {
+    goodsName: 'Goods name',
+    goodsQuality: 'Goods quality',
+    goodsQuantity: 'Goods quantity',
+    enable: 'qualified',
+    disable: 'Unqualified',
+    status: 'status'
+  },
   warehouse: {
     goodsName: 'Goods name',
     goodsNumber: 'Goods number',
@@ -567,12 +582,6 @@ export default {
     enable: 'in store',
     disable: 'out of store',
     status: 'status'
-  },
-  supplier: {
-    supplierName: 'Supplier name',
-    supplierAddr: 'Supplier address',
-    contactName: 'Contact Name',
-    contactNumber: 'Contact Number'
   },
   inputPasswordDemo: {
     title: 'InputPassword',
