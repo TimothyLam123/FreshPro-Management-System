@@ -163,6 +163,7 @@ export default {
     authorization: '权限管理',
     user: '用户管理',
     role: '角色管理',
+    research: '市场调研',
     supplier: '供应商管理',
     acceptance: '商品验收',
     warehouse: '仓库管理',
@@ -549,6 +550,15 @@ export default {
     roleName: '角色名称',
     role: '角色',
     menu: '菜单分配'
+  },
+  research: {
+    goodsName: '商品名称',
+    supplierName: '供应商名称',
+    goodsPrice: '商品价格',
+    goodsQuality: '商品质量',
+    enable: '合格',
+    disable: '不合格',
+    status: '状态'
   },
   supplier: {
     supplierName: '供应商名称',

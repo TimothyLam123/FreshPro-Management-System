@@ -101,35 +101,11 @@ export const asyncRouterMap: AppRouteRecordRaw[] = [
     },
     children: [
       {
-        path: 'department',
-        component: () => import('@/views/Authorization/Department/Department.vue'),
-        name: 'Department',
+        path: 'research',
+        component: () => import('@/views/Authorization/Research/Research.vue'),
+        name: 'Research',
         meta: {
-          title: t('router.department')
-        }
-      },
-      {
-        path: 'user',
-        component: () => import('@/views/Authorization/User/User.vue'),
-        name: 'User',
-        meta: {
-          title: t('router.user')
-        }
-      },
-      {
-        path: 'menu',
-        component: () => import('@/views/Authorization/Menu/Menu.vue'),
-        name: 'Menu',
-        meta: {
-          title: t('router.menuManagement')
-        }
-      },
-      {
-        path: 'role',
-        component: () => import('@/views/Authorization/Role/Role.vue'),
-        name: 'Role',
-        meta: {
-          title: t('router.role')
+          title: t('router.research')
         }
       },
       {

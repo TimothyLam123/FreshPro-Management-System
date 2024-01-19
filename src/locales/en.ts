@@ -165,6 +165,7 @@ export default {
     authorization: 'Authorization',
     user: 'User management',
     role: 'Role management',
+    research: 'Market research',
     supplier: 'Supplier managment',
     acceptance: 'Goods acceptance',
     warehouse: 'Warehouse managment',
@@ -559,6 +560,15 @@ export default {
     role: 'Role',
     // 菜单分配
     menu: 'Menu allocation'
+  },
+  research: {
+    goodsName: 'Goods name',
+    supplierName: 'Supplier name',
+    goodsPrice: 'Goods price',
+    goodsQuality: 'Goods quality',
+    enable: 'qualified',
+    disable: 'Unqualified',
+    status: 'status'
   },
   supplier: {
     supplierName: 'Supplier name',
