@@ -4,7 +4,6 @@ import { getWarehouseListApi } from '@/api/warehouse'
 import { useTable } from '@/hooks/web/useTable'
 import { useI18n } from '@/hooks/web/useI18n'
 import { Table, TableColumn } from '@/components/Table'
-import { ElTag } from 'element-plus'
 import { Search } from '@/components/Search'
 import { FormSchema } from '@/components/Form'
 import { ContentWrap } from '@/components/ContentWrap'
@@ -41,23 +40,16 @@ const tableColumns = reactive<TableColumn[]>([
     label: t('warehouse.goodsName')
   },
   {
+    field: 'goodsPrice',
+    label: t('warehouse.goodsPrice')
+  },
+  {
     field: 'goodsNumber',
     label: t('warehouse.goodsNumber')
   },
   {
-    field: 'status',
-    label: t('warehouse.status'),
-    slots: {
-      default: (data: any) => {
-        return (
-          <>
-            <ElTag type={data.row.status === 0 ? 'danger' : 'success'}>
-              {data.row.status === 1 ? t('warehouse.enable') : t('warehouse.disable')}
-            </ElTag>
-          </>
-        )
-      }
-    }
+    field: 'goodsType',
+    label: t('warehouse.goodsType')
   },
   {
     field: 'createTime',

@@ -1,7 +1,6 @@
 <script setup lang="tsx">
 import { PropType, ref, nextTick } from 'vue'
 import { Descriptions, DescriptionsSchema } from '@/components/Descriptions'
-import { ElTag } from 'element-plus'
 import { getMenuListApi } from '@/api/menu'
 import { useI18n } from '@/hooks/web/useI18n'
 
@@ -13,14 +12,6 @@ defineProps({
     default: () => undefined
   }
 })
-
-const renderTag = (enable?: boolean) => {
-  return (
-    <ElTag type={!enable ? 'danger' : 'success'}>
-      {enable ? t('research.enable') : t('research.disable')}
-    </ElTag>
-  )
-}
 
 const treeData = ref<any[]>([])
 const getMenuList = async () => {
@@ -46,13 +37,8 @@ const detailSchema = ref<DescriptionsSchema[]>([
     label: t('research.goodsPrice')
   },
   {
-    field: 'status',
-    label: t('research.status'),
-    slots: {
-      default: (data: any) => {
-        return renderTag(data.status)
-      }
-    }
+    field: 'goodsQuality',
+    label: t('research.goodsQuality')
   },
   {
     field: 'remark',

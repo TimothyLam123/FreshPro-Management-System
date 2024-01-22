@@ -1,5 +1,5 @@
 <script setup lang="tsx">
-import { reactive, ref, unref } from 'vue'
+import { reactive, ref, unref, h } from 'vue'
 import { getResearchListApi } from '@/api/research'
 import { useTable } from '@/hooks/web/useTable'
 import { useI18n } from '@/hooks/web/useI18n'
@@ -51,31 +51,30 @@ const tableColumns = reactive<TableColumn[]>([
   {
     field: 'goodsQuality',
     label: t('research.goodsQuality'),
-    slots: {
-      default: (data: any) => {
-        return (
-          <>
-            <ElTag type={data.row.goodsQuality === 0 ? 'danger' : 'success'}>
-              {data.row.goodsQuality === 1 ? t('research.enable') : t('research.disable')}
-            </ElTag>
-          </>
-        )
-      }
-    }
-  },
-  {
-    field: 'status',
-    label: t('research.status'),
-    slots: {
-      default: (data: any) => {
-        return (
-          <>
-            <ElTag type={data.row.status === 0 ? 'danger' : 'success'}>
-              {data.row.status === 1 ? t('research.enable') : t('research.disable')}
-            </ElTag>
-          </>
-        )
-      }
+    // slots: {
+    //   default: (data: any) => {
+    //     return (
+    //       <>
+    //         <ElTag type={data.row.goodsQuality === 0 ? 'danger' : 'success'}>
+    //           {data.row.goodsQuality === 1 ? t('research.enable') : t('research.disable')}
+    //         </ElTag>
+    //       </>
+    //     )
+    //   }
+    // }
+    formatter: (_: Recordable, __: TableColumn, cellValue: number) => {
+      return h(
+        ElTag,
+        {
+          type: cellValue === 1 ? 'success' : cellValue === 2 ? 'warning' : 'danger'
+        },
+        () =>
+          cellValue === 1
+            ? t('research.strongRecommend')
+            : cellValue === 2
+              ? t('research.recommend')
+              : t('research.notRecommend')
+      )
     }
   },
   {
@@ -175,11 +174,6 @@ const save = async () => {
     currentRow.value.supplierName = formData.supplierName
     currentRow.value.goodsPrice = formData.goodsPrice
     currentRow.value.goodsQuality = formData.goodsQuality
-    if (currentRow.value.goodsQuality == 1) {
-      currentRow.value.status = 1
-    } else {
-      currentRow.value.status = 0
-    }
   }
   if (actionType.value == 'add') {
     currentRow.value.remark = Mock.mock('@cword(10,15)')

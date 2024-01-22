@@ -20,17 +20,44 @@ const formSchema = ref<FormSchema[]>([
   {
     field: 'goodsName',
     label: t('research.goodsName'),
-    component: 'Input'
+    component: 'Select',
+    componentProps: {
+      options: [
+        {
+          label: t('research.strongRecommend'),
+          value: 1
+        },
+        {
+          label: t('research.recommend'),
+          value: 2
+        },
+        {
+          label: t('research.notRecommend'),
+          value: 3
+        }
+      ]
+    }
   },
   {
     field: 'supplierName',
     label: t('research.supplierName'),
-    component: 'Input'
-  },
-  {
-    field: 'goodsPrice',
-    label: t('research.goodsPrice'),
-    component: 'Input'
+    component: 'Select',
+    componentProps: {
+      options: [
+        {
+          label: t('research.strongRecommend'),
+          value: 1
+        },
+        {
+          label: t('research.recommend'),
+          value: 2
+        },
+        {
+          label: t('research.notRecommend'),
+          value: 3
+        }
+      ]
+    }
   },
   {
     field: 'goodsQuality',
@@ -39,12 +66,16 @@ const formSchema = ref<FormSchema[]>([
     componentProps: {
       options: [
         {
-          label: t('acceptance.disable'),
-          value: 0
+          label: t('research.strongRecommend'),
+          value: 1
         },
         {
-          label: t('acceptance.enable'),
-          value: 1
+          label: t('research.recommend'),
+          value: 2
+        },
+        {
+          label: t('research.notRecommend'),
+          value: 3
         }
       ]
     }

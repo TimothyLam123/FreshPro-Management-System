@@ -120,10 +120,7 @@ for (let i = 0; i < 4; i++) {
       role: '@first',
       goodsPrice: Mock.Random.integer(0, 99),
       supplierName: supplierNames[i],
-      goodsQuality: Mock.Random.integer(0, 1),
-      status: function () {
-        return this.goodsQuality === 1 ? 1 : 0
-      },
+      goodsQuality: Mock.Random.integer(1, 3),
       createTime: '@datetime',
       remark: '@cword(10, 15)'
     })

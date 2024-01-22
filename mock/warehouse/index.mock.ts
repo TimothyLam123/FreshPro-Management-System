@@ -109,6 +109,7 @@ const testList: string[] = [
 const List: any[] = []
 
 const goodsNames = ['商品1', '商品2', '商品3', '商品4']
+const goodsTypes = ['类型1', '类型2', '类型3', '类型4']
 const menus = [
   [
     {
@@ -196,11 +197,10 @@ for (let i = 0; i < 4; i++) {
       id: toAnyString(),
       // timestamp: +Mock.Random.date('T'),
       goodsName: goodsNames[i],
+      goodsPrice: Mock.Random.integer(0, 99),
       role: '@first',
-      goodsNumber: Mock.Random.integer(0, 9),
-      status: function () {
-        return this.goodsNumber === 0 ? 0 : 1
-      },
+      goodsNumber: Mock.Random.integer(1, 9),
+      goodsType: goodsTypes[i],
       createTime: '@datetime',
       remark: '@cword(10, 15)',
       menu: menus[i]

@@ -567,9 +567,9 @@ export default {
     supplierName: 'Supplier name',
     goodsPrice: 'Goods price',
     goodsQuality: 'Goods quality',
-    enable: 'qualified',
-    disable: 'Unqualified',
-    status: 'status'
+    strongRecommend: 'Strong recommend',
+    recommend: 'Recommend',
+    notRecommend: 'Do not recoomend'
   },
   supplier: {
     supplierName: 'Supplier name',
@@ -587,12 +587,13 @@ export default {
   },
   warehouse: {
     goodsName: 'Goods name',
+    goodsPrice: 'Goods price (each)',
     goodsNumber: 'Goods number',
     goods: 'Goods',
     menu: 'Menu allocation',
     enable: 'in store',
     disable: 'out of store',
-    status: 'status'
+    goodsType: 'Goods type'
   },
   inputPasswordDemo: {
     title: 'InputPassword',

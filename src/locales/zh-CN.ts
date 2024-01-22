@@ -557,9 +557,9 @@ export default {
     supplierName: '供应商名称',
     goodsPrice: '商品价格',
     goodsQuality: '商品质量',
-    enable: '合格',
-    disable: '不合格',
-    status: '状态'
+    strongRecommend: '很推荐',
+    recommend: '推荐',
+    notRecommend: '不推荐'
   },
   supplier: {
     supplierName: '供应商名称',
@@ -585,12 +585,13 @@ export default {
   },
   warehouse: {
     goodsName: '商品名称',
+    goodsPrice: '商品单价',
     goodsNumber: '商品数量',
     goods: '商品',
     menu: '菜单分配',
     enable: '入库',
     disable: '出库',
-    status: '状态'
+    goodsType: '商品类型'
   },
   inputPasswordDemo: {
     title: '密码输入框',
