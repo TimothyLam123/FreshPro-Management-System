@@ -4,7 +4,7 @@ import { useForm } from '@/hooks/web/useForm'
 import { PropType, reactive, watch, ref, unref, nextTick } from 'vue'
 import { useValidator } from '@/hooks/web/useValidator'
 import { useI18n } from '@/hooks/web/useI18n'
-import { ElTree, ElCheckboxGroup, ElCheckbox } from 'element-plus'
+import { ElTree } from 'element-plus'
 import { getMenuListApi } from '@/api/menu'
 import { filter, eachTree } from '@/utils/tree'
 import { findIndex } from '@/utils'
@@ -24,84 +24,38 @@ const treeRef = ref<typeof ElTree>()
 
 const formSchema = ref<FormSchema[]>([
   {
-    field: 'roleName',
-    label: t('role.roleName'),
+    field: 'orderID',
+    label: t('planning.orderID'),
     component: 'Input'
   },
   {
-    field: 'status',
-    label: t('menu.status'),
-    component: 'Select',
-    componentProps: {
-      options: [
-        {
-          label: t('userDemo.disable'),
-          value: 0
-        },
-        {
-          label: t('userDemo.enable'),
-          value: 1
-        }
-      ]
-    }
+    field: 'goodsName',
+    label: t('planning.goodsName'),
+    component: 'Input'
   },
   {
-    field: 'menu',
-    label: t('role.menu'),
-    colProps: {
-      span: 24
-    },
-    formItemProps: {
-      slots: {
-        default: () => {
-          return (
-            <>
-              <div class="flex w-full">
-                <div class="flex-1">
-                  <ElTree
-                    ref={treeRef}
-                    show-checkbox
-                    node-key="id"
-                    highlight-current
-                    check-strictly
-                    expand-on-click-node={false}
-                    data={treeData.value}
-                    onNode-click={nodeClick}
-                  >
-                    {{
-                      default: (data) => {
-                        return <span>{data.data.meta.title}</span>
-                      }
-                    }}
-                  </ElTree>
-                </div>
-                <div class="flex-1">
-                  {unref(currentTreeData) && unref(currentTreeData)?.permissionList ? (
-                    <ElCheckboxGroup v-model={unref(currentTreeData).meta.permission}>
-                      {unref(currentTreeData)?.permissionList.map((v: any) => {
-                        return <ElCheckbox label={v.value}>{v.label}</ElCheckbox>
-                      })}
-                    </ElCheckboxGroup>
-                  ) : null}
-                </div>
-              </div>
-            </>
-          )
-        }
-      }
-    }
+    field: 'orderQuantity',
+    label: t('planning.orderQuantity'),
+    component: 'Input'
+  },
+  {
+    field: 'orderBudget',
+    label: t('planning.orderBudget'),
+    component: 'Input'
+  },
+  {
+    field: 'supplierName',
+    label: t('planning.supplierName'),
+    component: 'Input'
   }
 ])
 
-const currentTreeData = ref()
-const nodeClick = (treeData: any) => {
-  currentTreeData.value = treeData
-}
-
 const rules = reactive({
-  roleName: [required()],
-  role: [required()],
-  status: [required()]
+  orderID: [required()],
+  goodsName: [required()],
+  orderQuantity: [required()],
+  orderBudget: [required()],
+  supplierName: [required()]
 })
 
 const { formRegister, formMethods } = useForm()
@@ -154,7 +108,7 @@ const submit = async () => {
       return checkedKeys.includes(item.id)
     })
     formData.menu = data || []
-    console.log(formData)
+    console.log('formData2', formData)
     return formData
   }
 }

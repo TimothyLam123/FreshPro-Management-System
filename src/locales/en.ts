@@ -167,6 +167,7 @@ export default {
     role: 'Role management',
     research: 'Market research',
     supplier: 'Supplier managment',
+    planning: 'Shopping planning',
     acceptance: 'Goods acceptance',
     warehouse: 'Warehouse managment',
     document: 'Document',

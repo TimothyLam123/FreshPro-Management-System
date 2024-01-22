@@ -165,6 +165,7 @@ export default {
     role: '角色管理',
     research: '市场调研',
     supplier: '供应商管理',
+    planning: '采购计划',
     acceptance: '商品验收',
     warehouse: '仓库管理',
     document: '文档',
@@ -565,6 +566,14 @@ export default {
     supplierAddr: '供应商地址',
     contactName: '联系人姓名',
     contactNumber: '联系人号码'
+  },
+  planning: {
+    orderID: '订单号',
+    goodsName: '商品名称',
+    orderQuantity: '购买数量',
+    orderBudget: '成本预算',
+    supplierName: '供应商名称',
+    orderTime: '购买时间'
   },
   acceptance: {
     goodsName: '商品名称',

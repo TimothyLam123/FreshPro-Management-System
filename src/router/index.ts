@@ -117,6 +117,14 @@ export const asyncRouterMap: AppRouteRecordRaw[] = [
         }
       },
       {
+        path: 'planning',
+        component: () => import('@/views/Authorization/Planning/Planning.vue'),
+        name: 'Planning',
+        meta: {
+          title: t('router.planning')
+        }
+      },
+      {
         path: 'acceptance',
         component: () => import('@/views/Authorization/Acceptance/Acceptance.vue'),
         name: 'Acceptance',

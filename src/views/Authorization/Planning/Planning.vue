@@ -1,11 +1,9 @@
 <script setup lang="tsx">
 import { reactive, ref, unref } from 'vue'
-import { getMenuListApi } from '@/api/menu'
+import { getPlanningListApi } from '@/api/planning'
 import { useTable } from '@/hooks/web/useTable'
 import { useI18n } from '@/hooks/web/useI18n'
 import { Table, TableColumn } from '@/components/Table'
-import { ElTag } from 'element-plus'
-import { Icon } from '@/components/Icon'
 import { Search } from '@/components/Search'
 import { FormSchema } from '@/components/Form'
 import { ContentWrap } from '@/components/ContentWrap'
@@ -13,19 +11,22 @@ import Write from './components/Write.vue'
 import Detail from './components/Detail.vue'
 import { Dialog } from '@/components/Dialog'
 import { BaseButton } from '@/components/Button'
+import { template } from 'lodash-es'
+import Mock from 'mockjs'
 
 const { t } = useI18n()
 
 const { tableRegister, tableState, tableMethods } = useTable({
   fetchDataApi: async () => {
-    const res = await getMenuListApi()
+    const res = await getPlanningListApi()
     return {
-      list: res.data.list || []
+      list: res.data.list || [],
+      total: res.data.total
     }
   }
 })
 
-const { dataList, loading } = tableState
+const { dataList, loading, total } = tableState
 const { getList } = tableMethods
 
 const tableColumns = reactive<TableColumn[]>([
@@ -35,71 +36,32 @@ const tableColumns = reactive<TableColumn[]>([
     type: 'index'
   },
   {
-    field: 'meta.title',
-    label: t('menu.menuName'),
-    slots: {
-      default: (data: any) => {
-        const title = data.row.meta.title
-        return <>{title}</>
-      }
-    }
+    field: 'orderID',
+    label: t('planning.orderID')
   },
   {
-    field: 'meta.icon',
-    label: t('menu.icon'),
-    slots: {
-      default: (data: any) => {
-        const icon = data.row.meta.icon
-        if (icon) {
-          return (
-            <>
-              <Icon icon={icon} />
-            </>
-          )
-        } else {
-          return null
-        }
-      }
-    }
-  },
-  // {
-  //   field: 'meta.permission',
-  //   label: t('menu.permission'),
-  //   slots: {
-  //     default: (data: any) => {
-  //       const permission = data.row.meta.permission
-  //       return permission ? <>{permission.join(', ')}</> : null
-  //     }
-  //   }
-  // },
-  {
-    field: 'component',
-    label: t('menu.component'),
-    slots: {
-      default: (data: any) => {
-        const component = data.row.component
-        return <>{component === '#' ? '顶级目录' : component === '##' ? '子目录' : component}</>
-      }
-    }
+    field: 'goodsName',
+    label: t('planning.goodsName')
   },
   {
-    field: 'path',
-    label: t('menu.path')
+    field: 'orderQuantity',
+    label: t('planning.orderQuantity')
   },
   {
-    field: 'status',
-    label: t('menu.status'),
-    slots: {
-      default: (data: any) => {
-        return (
-          <>
-            <ElTag type={data.row.status === 0 ? 'danger' : 'success'}>
-              {data.row.status === 1 ? t('userDemo.enable') : t('userDemo.disable')}
-            </ElTag>
-          </>
-        )
-      }
-    }
+    field: 'orderBudget',
+    label: t('planning.orderBudget')
+  },
+  {
+    field: 'supplierName',
+    label: t('planning.supplierName')
+  },
+  {
+    field: 'orderTime',
+    label: t('planning.orderTime')
+  },
+  {
+    field: 'remark',
+    label: t('userDemo.remark')
   },
   {
     field: 'action',
@@ -108,6 +70,7 @@ const tableColumns = reactive<TableColumn[]>([
     slots: {
       default: (data: any) => {
         const row = data.row
+        const index = data.$index
         return (
           <>
             <BaseButton type="primary" onClick={() => action(row, 'edit')}>
@@ -116,7 +79,9 @@ const tableColumns = reactive<TableColumn[]>([
             <BaseButton type="success" onClick={() => action(row, 'detail')}>
               {t('exampleDemo.detail')}
             </BaseButton>
-            <BaseButton type="danger">{t('exampleDemo.del')}</BaseButton>
+            <BaseButton type="danger" onClick={() => handleDelete(index)}>
+              {t('exampleDemo.del')}
+            </BaseButton>
           </>
         )
       }
@@ -126,8 +91,8 @@ const tableColumns = reactive<TableColumn[]>([
 
 const searchSchema = reactive<FormSchema[]>([
   {
-    field: 'meta.title',
-    label: t('menu.menuName'),
+    field: 'goodsName',
+    label: t('planning.goodsName'),
     component: 'Input'
   }
 ])
@@ -135,6 +100,18 @@ const searchSchema = reactive<FormSchema[]>([
 const searchParams = ref({})
 const setSearchParams = (data: any) => {
   searchParams.value = data
+  const tempList = dataList.value.filter((item) => {
+    return item.goodsName.indexOf(data.goodsName) !== -1
+  })
+  if (tempList.length > 0) {
+    dataList.value = []
+    dataList.value.push(...tempList)
+  } else {
+    dataList.value = []
+  }
+}
+
+const reset = () => {
   getList()
 }
 
@@ -155,30 +132,48 @@ const action = (row: any, type: string) => {
   dialogVisible.value = true
 }
 
-const AddAction = () => {
+const handleDelete = (index: any) => {
+  dataList.value.splice(index, 1)
+}
+
+const AddAction = async () => {
   dialogTitle.value = t('exampleDemo.add')
-  currentRow.value = undefined
+  currentRow.value = {}
   dialogVisible.value = true
-  actionType.value = ''
+  actionType.value = 'add'
 }
 
 const save = async () => {
   const write = unref(writeRef)
   const formData = await write?.submit()
-  console.log(formData)
   if (formData) {
     saveLoading.value = true
     setTimeout(() => {
       saveLoading.value = false
       dialogVisible.value = false
     }, 1000)
+    currentRow.value.orderID = formData.orderID
+    currentRow.value.goodsName = formData.goodsName
+    currentRow.value.orderQuantity = formData.orderQuantity
+    currentRow.value.orderBudget = formData.orderBudget
+    currentRow.value.supplierName = formData.supplierName
+    if (currentRow.value.goodsNumber == 0) {
+      currentRow.value.status = 0
+    } else {
+      currentRow.value.status = 1
+    }
+  }
+  if (actionType.value == 'add') {
+    currentRow.value.remark = Mock.mock('@cword(10,15)')
+    currentRow.value.orderTime = Mock.Random.now()
+    dataList.value.push(currentRow.value)
   }
 }
 </script>
 
 <template>
   <ContentWrap>
-    <Search :schema="searchSchema" @reset="setSearchParams" @search="setSearchParams" />
+    <Search :schema="searchSchema" @reset="reset" @search="setSearchParams" />
     <div class="mb-10px">
       <BaseButton type="primary" @click="AddAction">{{ t('exampleDemo.add') }}</BaseButton>
     </div>
@@ -188,14 +183,16 @@ const save = async () => {
       node-key="id"
       :data="dataList"
       :loading="loading"
+      :pagination="{
+        total
+      }"
       @register="tableRegister"
     />
   </ContentWrap>
 
   <Dialog v-model="dialogVisible" :title="dialogTitle">
     <Write v-if="actionType !== 'detail'" ref="writeRef" :current-row="currentRow" />
-
-    <Detail v-if="actionType === 'detail'" :current-row="currentRow" />
+    <Detail v-else :current-row="currentRow" />
 
     <template #footer>
       <BaseButton
