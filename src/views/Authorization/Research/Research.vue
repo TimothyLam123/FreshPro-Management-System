@@ -51,17 +51,6 @@ const tableColumns = reactive<TableColumn[]>([
   {
     field: 'goodsQuality',
     label: t('research.goodsQuality'),
-    // slots: {
-    //   default: (data: any) => {
-    //     return (
-    //       <>
-    //         <ElTag type={data.row.goodsQuality === 0 ? 'danger' : 'success'}>
-    //           {data.row.goodsQuality === 1 ? t('research.enable') : t('research.disable')}
-    //         </ElTag>
-    //       </>
-    //     )
-    //   }
-    // }
     formatter: (_: Recordable, __: TableColumn, cellValue: number) => {
       return h(
         ElTag,

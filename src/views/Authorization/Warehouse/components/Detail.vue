@@ -1,9 +1,6 @@
 <script setup lang="tsx">
-import { PropType, ref, unref, nextTick } from 'vue'
+import { PropType, ref } from 'vue'
 import { Descriptions, DescriptionsSchema } from '@/components/Descriptions'
-import { ElTag, ElTree } from 'element-plus'
-import { findIndex } from '@/utils'
-import { getMenuListApi } from '@/api/menu'
 import { useI18n } from '@/hooks/web/useI18n'
 
 const { t } = useI18n()
@@ -15,95 +12,27 @@ defineProps({
   }
 })
 
-const filterPermissionName = (value: string) => {
-  const index = findIndex(unref(currentTreeData)?.permissionList || [], (item) => {
-    return item.value === value
-  })
-  return (unref(currentTreeData)?.permissionList || [])[index].label ?? ''
-}
-
-const renderTag = (enable?: boolean) => {
-  return (
-    <ElTag type={!enable ? 'danger' : 'success'}>
-      {enable ? t('warehouse.enable') : t('warehouse.disable')}
-    </ElTag>
-  )
-}
-
-const treeRef = ref<typeof ElTree>()
-
-const currentTreeData = ref()
-const nodeClick = (treeData: any) => {
-  currentTreeData.value = treeData
-}
-
-const treeData = ref<any[]>([])
-const getMenuList = async () => {
-  const res = await getMenuListApi()
-  if (res) {
-    treeData.value = res.data.list
-    await nextTick()
-  }
-}
-getMenuList()
-
 const detailSchema = ref<DescriptionsSchema[]>([
   {
     field: 'goodsName',
     label: t('warehouse.goodsName')
   },
   {
-    field: 'status',
-    label: t('warehouse.status'),
-    slots: {
-      default: (data: any) => {
-        return renderTag(data.status)
-      }
-    }
+    field: 'goodsPrice',
+    label: t('warehouse.goodsPrice')
+  },
+  {
+    field: 'goodsNumber',
+    label: t('warehouse.goodsNumber')
+  },
+  {
+    field: 'goodsType',
+    label: t('warehouse.goodsType')
   },
   {
     field: 'remark',
     label: t('userDemo.remark'),
     span: 24
-  },
-  {
-    field: 'permissionList',
-    label: t('role.menu'),
-    span: 24,
-    slots: {
-      default: () => {
-        return (
-          <>
-            <div class="flex w-full">
-              <div class="flex-1">
-                <ElTree
-                  ref={treeRef}
-                  node-key="id"
-                  props={{ children: 'children', label: 'title' }}
-                  highlight-current
-                  expand-on-click-node={false}
-                  data={treeData.value}
-                  onNode-click={nodeClick}
-                >
-                  {{
-                    default: (data) => {
-                      return <span>{data?.data?.title}</span>
-                    }
-                  }}
-                </ElTree>
-              </div>
-              <div class="flex-1">
-                {unref(currentTreeData)
-                  ? unref(currentTreeData)?.meta?.permission?.map((v: string) => {
-                      return <ElTag class="ml-2 mt-2">{filterPermissionName(v)}</ElTag>
-                    })
-                  : null}
-              </div>
-            </div>
-          </>
-        )
-      }
-    }
   }
 ])
 </script>
