@@ -573,7 +573,8 @@ export default {
     orderQuantity: '购买数量',
     orderBudget: '成本预算',
     supplierName: '供应商名称',
-    orderTime: '购买时间'
+    orderTime: '购买时间',
+    acceptance: '验收'
   },
   acceptance: {
     goodsName: '商品名称',

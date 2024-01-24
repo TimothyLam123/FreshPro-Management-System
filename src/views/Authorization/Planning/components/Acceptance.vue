@@ -1,10 +1,13 @@
 <script setup lang="tsx">
-import { PropType, ref, nextTick } from 'vue'
+import { PropType, ref } from 'vue'
 import { Descriptions, DescriptionsSchema } from '@/components/Descriptions'
-import { getMenuListApi } from '@/api/menu'
 import { useI18n } from '@/hooks/web/useI18n'
+import { useForm } from '@/hooks/web/useForm'
 
 const { t } = useI18n()
+
+const { formMethods } = useForm()
+const { getFormData, getElFormExpose } = formMethods
 
 defineProps({
   currentRow: {
@@ -13,17 +16,7 @@ defineProps({
   }
 })
 
-const treeData = ref<any[]>([])
-const getMenuList = async () => {
-  const res = await getMenuListApi()
-  if (res) {
-    treeData.value = res.data.list
-    await nextTick()
-  }
-}
-getMenuList()
-
-const detailSchema = ref<DescriptionsSchema[]>([
+const acceptanceSchema = ref<DescriptionsSchema[]>([
   {
     field: 'orderID',
     label: t('planning.orderID')
@@ -54,8 +47,24 @@ const detailSchema = ref<DescriptionsSchema[]>([
     span: 24
   }
 ])
+
+const submit = async () => {
+  const elForm = await getElFormExpose()
+  const valid = await elForm?.validate().catch((err) => {
+    console.log(err)
+  })
+  if (valid) {
+    const formData = await getFormData()
+    console.log('formData2', formData)
+    return formData
+  }
+}
+
+defineExpose({
+  submit
+})
 </script>
 
 <template>
-  <Descriptions :schema="detailSchema" :data="currentRow || {}" />
+  <Descriptions :schema="acceptanceSchema" :data="currentRow || {}" />
 </template>

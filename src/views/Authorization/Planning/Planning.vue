@@ -8,7 +8,7 @@ import { Search } from '@/components/Search'
 import { FormSchema } from '@/components/Form'
 import { ContentWrap } from '@/components/ContentWrap'
 import Write from './components/Write.vue'
-import Detail from './components/Detail.vue'
+import Acceptance from './components/Acceptance.vue'
 import { Dialog } from '@/components/Dialog'
 import { BaseButton } from '@/components/Button'
 import { template } from 'lodash-es'
@@ -73,11 +73,11 @@ const tableColumns = reactive<TableColumn[]>([
         const index = data.$index
         return (
           <>
-            <BaseButton type="primary" onClick={() => action(row, 'edit')}>
+            <BaseButton type="primary" onClick={() => actionEdit(row, 'edit')}>
               {t('exampleDemo.edit')}
             </BaseButton>
-            <BaseButton type="success" onClick={() => action(row, 'detail')}>
-              {t('exampleDemo.detail')}
+            <BaseButton type="success" onClick={() => actionAcceptance(row, index, 'acceptance')}>
+              {t('planning.acceptance')}
             </BaseButton>
             <BaseButton type="danger" onClick={() => handleDelete(index)}>
               {t('exampleDemo.del')}
@@ -120,15 +120,24 @@ const dialogTitle = ref('')
 
 const currentRow = ref()
 const actionType = ref('')
+const currentIndex = ref()
 
 const writeRef = ref<ComponentRef<typeof Write>>()
 
 const saveLoading = ref(false)
 
-const action = (row: any, type: string) => {
-  dialogTitle.value = t(type === 'edit' ? 'exampleDemo.edit' : 'exampleDemo.detail')
+const actionEdit = (row: any, type: string) => {
+  dialogTitle.value = t('exampleDemo.edit')
   actionType.value = type
   currentRow.value = row
+  dialogVisible.value = true
+}
+
+const actionAcceptance = (row: any, index: any, type: string) => {
+  dialogTitle.value = t('planning.acceptance')
+  actionType.value = type
+  currentRow.value = row
+  currentIndex.value = index
   dialogVisible.value = true
 }
 
@@ -169,6 +178,16 @@ const save = async () => {
     dataList.value.push(currentRow.value)
   }
 }
+
+const acceptance = async () => {
+  saveLoading.value = true
+  setTimeout(() => {
+    saveLoading.value = false
+    dialogVisible.value = false
+  }, 1000)
+  console.log('currentRow value', currentRow.value)
+  dataList.value.splice(currentIndex.value, 1)
+}
 </script>
 
 <template>
@@ -191,17 +210,21 @@ const save = async () => {
   </ContentWrap>
 
   <Dialog v-model="dialogVisible" :title="dialogTitle">
-    <Write v-if="actionType !== 'detail'" ref="writeRef" :current-row="currentRow" />
-    <Detail v-else :current-row="currentRow" />
+    <Write v-if="actionType !== 'acceptance'" ref="writeRef" :current-row="currentRow" />
+    <Acceptance v-else :current-row="currentRow" />
 
     <template #footer>
+      <BaseButton v-if="actionType == 'edit'" type="primary" :loading="saveLoading" @click="save">
+        {{ t('exampleDemo.save') }}
+      </BaseButton>
+
       <BaseButton
-        v-if="actionType !== 'detail'"
+        v-if="actionType == 'acceptance'"
         type="primary"
         :loading="saveLoading"
-        @click="save"
+        @click="acceptance"
       >
-        {{ t('exampleDemo.save') }}
+        {{ t('planning.acceptance') }}
       </BaseButton>
       <BaseButton @click="dialogVisible = false">{{ t('dialogDemo.close') }}</BaseButton>
     </template>

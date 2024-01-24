@@ -575,7 +575,9 @@ export default {
     supplierName: 'Supplier name',
     supplierAddr: 'Supplier address',
     contactName: 'Contact Name',
-    contactNumber: 'Contact Number'
+    contactNumber: 'Contact Number',
+    orderTime: 'Order time',
+    acceptance: 'Acceptance'
   },
   acceptance: {
     goodsName: 'Goods name',
