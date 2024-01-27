@@ -131,6 +131,14 @@ export const asyncRouterMap: AppRouteRecordRaw[] = [
         meta: {
           title: t('router.warehouse')
         }
+      },
+      {
+        path: 'testData',
+        component: () => import('@/views/Authorization/testData.vue'),
+        name: 'testData',
+        meta: {
+          title: t('router.testData')
+        }
       }
     ]
   }
