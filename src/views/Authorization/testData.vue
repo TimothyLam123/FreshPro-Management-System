@@ -19,10 +19,12 @@
 <script>
 import { ref, onMounted } from 'vue'
 import axios from 'axios'
+import api from '@/api'
 
 export default {
   setup() {
     const posts = ref([])
+    const dataList = ref([])
 
     onMounted(async () => {
       try {
@@ -30,6 +32,17 @@ export default {
         console.log('response', response.data)
         posts.value = response.data
         console.log('post.value', posts.value)
+
+        const res = await api.getProductList()
+        console.log('getProductList res', res)
+        console.log('getProductList res.value', res.value)
+        for (let i = 0; i < 4; i++) {
+          console.log('res.value[i]', res.value[i])
+        }
+        if (res) {
+          dataList.value = res.value
+          console.log('dataList.value', dataList.value)
+        }
       } catch (error) {
         console.error('Error fetching data:', error)
       }
